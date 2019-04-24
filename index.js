@@ -1,10 +1,14 @@
 const dotenv = require('dotenv').config()
 const express = require('express')
 const app = express() 
+const authRouter = require('./auth')
 
-app.get("/", (req, res) => {
-    res.send('alloha')
-})
 
-const PORT = process.env.PORT || 5000
+
+app.use('/', authRouter)
+  
+
+
+
+const PORT = process.env.PORT
 app.listen(PORT, console.log(`Server is running on port ${PORT}`))
