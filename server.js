@@ -1,12 +1,10 @@
 const dotenv = require('dotenv').config()
 const express = require('express')
 const app = express() 
-const querystring = require('querystring')
-const axios = require('axios')
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
-const authRoutes = require('./auth/authRoutes')
+const authRoutes = require('./auth/auth.routes')
 
 
 app.use(cors())
