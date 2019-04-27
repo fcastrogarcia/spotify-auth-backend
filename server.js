@@ -9,8 +9,9 @@ const authRoutes = require('./auth/auth.routes')
 
 app.use(cors())
    .use(cookieParser());
-
-authRoutes(app)
+   
+   
+app.use('/', authRoutes)
 
  
 

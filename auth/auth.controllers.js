@@ -53,7 +53,7 @@ const callbackController = async (req, res) => {
 
     const { access_token, refresh_token } = response
     //probar sacar data desde acá
-    res.redirect('http://localhost:3000?' +
+    res.redirect('http://localhost:3000/home?' +
       querystring.stringify({
         access_token: access_token,
         refresh_token: refresh_token

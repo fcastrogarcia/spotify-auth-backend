@@ -1,17 +1,18 @@
+const router = require('express').Router();
 
 const authControllers = require('./auth.controllers')
 
 
-module.exports = (app) => { 
-  
+
 //Authorization code request
-  app.get('/login', authControllers.login)
+  router.get('/login', authControllers.login)
 
     
 //Tokens request 
-  app.get('/callback', authControllers.callback)
+  router.get('/callback', authControllers.callback)
 
-}
+
+module.exports = router
     
        
  
