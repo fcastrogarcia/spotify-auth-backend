@@ -63,7 +63,7 @@ const callbackController = async (req, res) => {
   const { access_token, refresh_token } = response;
 
   res.redirect(
-    "http://192.168.0.50:3000/home?" +
+    "https://cranky-noyce-0f99dd.netlify.com/home?" +
       querystring.stringify({
         access_token: access_token,
         refresh_token: refresh_token
