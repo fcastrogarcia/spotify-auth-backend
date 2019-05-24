@@ -63,7 +63,7 @@ const callbackController = async (req, res) => {
   const { access_token, refresh_token } = response;
 
   res.redirect(
-    "https://cranky-noyce-0f99dd.netlify.com/home?" +
+    "https://yourtopmusic.netlify.com/home?" +
       querystring.stringify({
         access_token: access_token,
         refresh_token: refresh_token
@@ -72,4 +72,4 @@ const callbackController = async (req, res) => {
 };
 
 module.exports.login = loginController;
-module.exports.callback = callbackController; //hacer un obejto solo
+module.exports.callback = callbackController;
