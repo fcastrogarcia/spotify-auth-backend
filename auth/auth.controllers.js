@@ -1,5 +1,5 @@
-const generateRandomString = require("./auth.funcs").generateRandomString;
-const tokens = require("./auth.funcs").tokens;
+const generateRandomString = require("./utils").generateRandomString;
+const tokens = require("./utils").tokens;
 const querystring = require("querystring");
 
 const client_id = process.env.CLIENT_ID;
