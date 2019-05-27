@@ -4,6 +4,7 @@ const querystring = require("querystring");
 
 const client_id = process.env.CLIENT_ID;
 const redirect_uri = process.env.REDIRECT_URI;
+const frontend_uri = process.env.FRONTEND_URI;
 
 const stateKey = "spotify_auth_state";
 
@@ -53,18 +54,14 @@ const callbackController = async (req, res) => {
       return res.data;
     })
     .catch(err => {
-      res.redirect(
-        "/#" +
-          querystring.stringify({
-            error: "invalid_token"
-          })
-      );
+      res.redirect(frontend_uri);
     });
 
   const { access_token, refresh_token } = response;
 
   res.redirect(
-    "https://yourtopmusic.netlify.com/home?" +
+    frontend_uri +
+      "home?" +
       querystring.stringify({
         access_token: access_token,
         refresh_token: refresh_token
