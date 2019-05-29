@@ -12,7 +12,8 @@ const loginController = (req, res) => {
   const state = generateRandomString(16);
   res.cookie(stateKey, state);
 
-  const scope = "user-read-private user-read-email user-top-read";
+  const scope =
+    "user-read-private user-read-email user-top-read playlist-modify-private playlist-modify-public";
   res.redirect(
     "https://accounts.spotify.com/authorize?" +
       querystring.stringify({
