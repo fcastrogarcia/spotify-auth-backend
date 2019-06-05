@@ -71,18 +71,15 @@ const callbackController = async (req, res) => {
 
 const getNewToken = async (req, res) => {
   const { refresh_token } = req.params;
-  console.log("r.t. from params: ", refresh_token);
-  const refreshtokendata = querystring.stringify({
+  const refresh_token_data = querystring.stringify({
     grant_type: "refresh_token",
     refresh_token: refresh_token
   });
-
   const response = await tokens
-    .post("/", refreshtokendata)
-    .catch(error => console.log(error));
+    .post("/", refresh_token_data)
+    .catch(error => error.response);
 
-  res.send(response);
-  console.log("api_response: ", response);
+  res.json(response.data);
 };
 
 module.exports.login = loginController;
