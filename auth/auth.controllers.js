@@ -1,5 +1,4 @@
-const generateRandomString = require("./utils").generateRandomString;
-const tokens = require("./utils").tokens;
+const { tokens, generateRandomString } = require("./utils");
 const querystring = require("querystring");
 
 const client_id = process.env.CLIENT_ID;
@@ -70,5 +69,22 @@ const callbackController = async (req, res) => {
   );
 };
 
+const getNewToken = async (req, res) => {
+  const { refresh_token } = req.params;
+  console.log("r.t. from params: ", refresh_token);
+  const refreshtokendata = querystring.stringify({
+    grant_type: "refresh_token",
+    refresh_token: refresh_token
+  });
+
+  const response = await tokens
+    .post("/", refreshtokendata)
+    .catch(error => console.log(error));
+
+  res.send(response);
+  console.log("api_response: ", response);
+};
+
 module.exports.login = loginController;
 module.exports.callback = callbackController;
+module.exports.new_token = getNewToken;
