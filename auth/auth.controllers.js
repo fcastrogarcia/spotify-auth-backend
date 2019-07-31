@@ -59,15 +59,14 @@ const callbackController = async (req, res) => {
 
   const { access_token, refresh_token } = response;
 
-  // res.redirect(
-  //   frontend_uri +
-  //     "home?" +
-  //     querystring.stringify({
-  //       access_token: access_token,
-  //       refresh_token: refresh_token
-  //     })
-  // );
-  res.json({ access_token, refresh_token });
+  res.redirect(
+    frontend_uri +
+      "home?" +
+      querystring.stringify({
+        access_token,
+        refresh_token
+      })
+  );
 };
 
 const getNewToken = async (req, res) => {
