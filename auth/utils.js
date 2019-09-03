@@ -13,12 +13,15 @@ const generateRandomString = length => {
   }
   return text;
 };
+const auth = Buffer.from(
+  `${client_id}:${client_secret}`
+).toString("base64");
 
 const tokens = axios.create({
   baseURL: "https://accounts.spotify.com/api/token",
   headers: {
     Authorization:
-      "Basic " + new Buffer(client_id + ":" + client_secret).toString("base64"),
+      `Basic ${auth}`,
     "Content-Type": "application/x-www-form-urlencoded"
   },
   responseType: "json"

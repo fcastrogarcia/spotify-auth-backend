@@ -6,7 +6,8 @@ const cookieParser = require("cookie-parser");
 
 const authRoutes = require("./auth/auth.routes");
 
-app.use(cors()).use(cookieParser());
+app.use(cors());
+app.use(cookieParser());
 
 app.use("/", authRoutes);
 

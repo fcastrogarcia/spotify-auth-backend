@@ -1,9 +1,11 @@
 const { tokens, generateRandomString } = require("./utils");
 const querystring = require("querystring");
+const request = require("request");
 
 const client_id = process.env.CLIENT_ID;
 const redirect_uri = process.env.REDIRECT_URI;
 const frontend_uri = process.env.FRONTEND_URI;
+const client_secret = process.env.CLIENT_SECRET;
 
 const stateKey = "spotify_auth_state";
 
@@ -31,8 +33,6 @@ const callbackController = async (req, res) => {
   const state = req.query.state || null;
   const storedState = req.cookies ? req.cookies[stateKey] : null;
 
-  res.clearCookie(stateKey);
-
   if (state === null || state !== storedState) {
     res.redirect(
       "/#" +
@@ -42,31 +42,79 @@ const callbackController = async (req, res) => {
     );
   }
 
-  const data = querystring.stringify({
-    code: code,
-    redirect_uri: redirect_uri,
-    grant_type: "authorization_code"
-  });
+  res.clearCookie(stateKey);
 
-  const response = await tokens
-    .post("/", data)
-    .then(res => {
-      return res.data;
-    })
-    .catch(err => {
+  const auth = Buffer.from(`${client_id}:${client_secret}`).toString("base64");
+  //set options for the request
+  const authOptions = {
+    url: "https://accounts.spotify.com/api/token",
+    form: {
+      code: code,
+      redirect_uri: redirect_uri,
+      grant_type: "authorization_code"
+    },
+    headers: {
+      Authorization: `Basic ${auth}`
+    },
+    json: true
+  };
+
+  request.post(authOptions, function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+      const access_token = body.access_token,
+        refresh_token = body.refresh_token;
+
+      const options = {
+        url: "https://api.spotify.com/v1/me",
+        headers: { Authorization: "Bearer " + access_token },
+        json: true
+      };
+
+      res.redirect(
+        frontend_uri +
+          "home?" +
+          querystring.stringify({
+            access_token,
+            refresh_token
+          })
+      );
+    } else {
       res.redirect(frontend_uri);
-    });
+    }
+  });
+  // const response = await axios
+  //   .post(
+  //     "https://accounts.spotify.com/api/token/",
+  //     querystring.stringify({
+  //       grant_type: "authorization_code",
+  //       code: code,
+  //       redirect_uri: redirect_uri
+  //     }),
+  //     {
+  //       headers: {
+  //         Authorization: `Basic ${auth}`,
+  //         "Content-Type": "application/x-www-form-urlencoded"
+  //       }
+  //     }
+  //   )
+  //   .then(res => {
+  //     return res.data;
+  //   })
+  //   .catch(err => {
+  //     console.log(err.response);
+  //     res.redirect(frontend_uri);
+  //   });
 
-  const { access_token, refresh_token } = response;
+  // const { access_token, refresh_token } = response;
 
-  res.redirect(
-    frontend_uri +
-      "home?" +
-      querystring.stringify({
-        access_token,
-        refresh_token
-      })
-  );
+  // res.redirect(
+  //   frontend_uri +
+  //     "home?" +
+  //     querystring.stringify({
+  //       access_token,
+  //       refresh_token
+  //     })
+  // );
 };
 
 const getNewToken = async (req, res) => {
