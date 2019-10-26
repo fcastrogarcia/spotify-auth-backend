@@ -82,39 +82,6 @@ const callbackController = async (req, res) => {
       res.redirect(frontend_uri);
     }
   });
-  // const response = await axios
-  //   .post(
-  //     "https://accounts.spotify.com/api/token/",
-  //     querystring.stringify({
-  //       grant_type: "authorization_code",
-  //       code: code,
-  //       redirect_uri: redirect_uri
-  //     }),
-  //     {
-  //       headers: {
-  //         Authorization: `Basic ${auth}`,
-  //         "Content-Type": "application/x-www-form-urlencoded"
-  //       }
-  //     }
-  //   )
-  //   .then(res => {
-  //     return res.data;
-  //   })
-  //   .catch(err => {
-  //     console.log(err.response);
-  //     res.redirect(frontend_uri);
-  //   });
-
-  // const { access_token, refresh_token } = response;
-
-  // res.redirect(
-  //   frontend_uri +
-  //     "home?" +
-  //     querystring.stringify({
-  //       access_token,
-  //       refresh_token
-  //     })
-  // );
 };
 
 const getNewToken = async (req, res) => {
