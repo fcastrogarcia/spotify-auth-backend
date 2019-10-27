@@ -35,7 +35,7 @@ exports.callback = (req, res) => {
   const { returnTo } = JSON.parse(Buffer.from(state, "base64").toString());
   if (typeof returnTo === "string") {
     return res.redirect(
-      `${returnTo}/home?${querystring.stringify({
+      `${returnTo}?${querystring.stringify({
         access_token: accessToken,
         refresh_token: refreshToken,
         displayName,
