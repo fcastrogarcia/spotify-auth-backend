@@ -1,14 +1,18 @@
 const router = require("express").Router();
+const passport = require("passport");
 
-const authControllers = require("./auth.controllers");
+const { login, callback } = require("./auth.controllers");
 
 //Authorization code request
-router.get("/login", authControllers.login);
+router.get("/login", login);
 
 //Tokens request
-router.get("/callback", authControllers.callback);
-
-//new token from refresh token
-router.get("/newtoken/:refresh_token", authControllers.new_token);
+router.get(
+  "/callback",
+  passport.authenticate("spotify", {
+    failureMessage: "Error while authenticating"
+  }),
+  callback
+);
 
 module.exports = router;
