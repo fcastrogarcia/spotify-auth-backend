@@ -1,4 +1,5 @@
 const SpotifyStrategy = require("passport-spotify").Strategy;
+const User = require("../models/User");
 const { client_id, client_secret, redirect_uri } = require("./keys");
 
 module.exports = passport => {
@@ -10,12 +11,11 @@ module.exports = passport => {
         callbackURL: redirect_uri
       },
       function(accessToken, refreshToken, expires_in, profile, done) {
-        profile.accessToken = accessToken;
-        profile.refreshToken = refreshToken;
-        // User.findOrCreate({ spotifyId: profile.id }, function(err, user) {
-        //   return done(err, user);
-        // });
-        return done(null, profile);
+        User.findOrCreate({ spotifyId: profile.id }, function(err, user) {
+          user.accessToken = accessToken;
+          user.refreshToken = refreshToken;
+          return done(err, user);
+        });
       }
     )
   );
