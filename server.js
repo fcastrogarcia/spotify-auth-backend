@@ -10,6 +10,7 @@ const authRoutes = require("./auth/auth.routes");
 
 app.use(cors());
 app.use(cookieParser());
+
 //db config
 const db = mongo_uri;
 //db connection
@@ -17,13 +18,8 @@ mongoose
   .connect(db, { useNewUrlParser: true })
   .then(() => console.log("db connected succesfully"))
   .catch(err => console.log(err));
-//passport config
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
+
+  //passport config
 app.use(passport.initialize());
 require("./config/passport")(passport);
 

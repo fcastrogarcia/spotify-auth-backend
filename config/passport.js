@@ -11,7 +11,7 @@ module.exports = passport => {
         callbackURL: redirect_uri
       },
       function(accessToken, refreshToken, expires_in, profile, done) {
-        User.findOrCreate({ spotifyId: profile.id }, function(err, user) {
+        User.findOrCreate({ spotifyId: profile.id }, (err, user) => {
           user.accessToken = accessToken;
           user.refreshToken = refreshToken;
           return done(err, user);

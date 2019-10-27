@@ -9,9 +9,7 @@ router.get("/login", login);
 //Tokens request
 router.get(
   "/callback",
-  passport.authenticate("spotify", {
-    failureMessage: "Error while authenticating"
-  }),
+  passport.authenticate("spotify", { session: false }),
   callback
 );
 
