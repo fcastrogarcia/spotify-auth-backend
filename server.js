@@ -4,20 +4,10 @@ const app = express();
 const passport = require("passport");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const mongoose = require("mongoose");
-const { mongo_uri } = require("./config/keys");
 const authRoutes = require("./auth/auth.routes");
 
 app.use(cors());
 app.use(cookieParser());
-
-//db config
-const db = mongo_uri;
-//db connection
-mongoose
-  .connect(db, { useNewUrlParser: true })
-  .then(() => console.log("db connected succesfully"))
-  .catch(err => console.log(err));
 
   //passport config
 app.use(passport.initialize());

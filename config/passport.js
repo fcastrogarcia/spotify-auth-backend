@@ -1,5 +1,4 @@
 const SpotifyStrategy = require("passport-spotify").Strategy;
-const User = require("../models/User");
 const { client_id, client_secret, redirect_uri } = require("./keys");
 
 module.exports = passport => {
@@ -11,11 +10,19 @@ module.exports = passport => {
         callbackURL: redirect_uri
       },
       function(accessToken, refreshToken, expires_in, profile, done) {
-        User.findOrCreate({ spotifyId: profile.id }, (err, user) => {
-          user.accessToken = accessToken;
-          user.refreshToken = refreshToken;
-          return done(err, user);
-        });
+        try {
+          const user = {
+            ...profile,
+            accessToken,
+            refreshToken,
+            expires_in
+          };
+          done(null, user);
+        } catch (err) {
+          done(err, null, {
+            message: "An error ocurred trying to authenticate the user"
+          });
+        }
       }
     )
   );
