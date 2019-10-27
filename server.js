@@ -1,13 +1,17 @@
-const dotenv = require("dotenv").config();
+require("dotenv").config();
 const express = require("express");
 const app = express();
+const passport = require("passport");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-
 const authRoutes = require("./auth/auth.routes");
 
 app.use(cors());
 app.use(cookieParser());
+
+  //passport config
+app.use(passport.initialize());
+require("./config/passport")(passport);
 
 app.use("/", authRoutes);
 
