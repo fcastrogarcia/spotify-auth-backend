@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/fcastrogarcia/spotify__project#readme",
   "dependencies": {
-    "axios": "^0.18.1",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "dotenv": "^7.0.0",
@@ -29,8 +28,7 @@
     "mongoose-findorcreate": "^3.0.0",
     "passport": "^0.4.0",
     "passport-spotify": "^1.1.0",
-    "querystring": "^0.2.0",
-    "request": "^2.88.0"
+    "querystring": "^0.2.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.2"
